@@ -16,6 +16,7 @@ import com.monkata.users.services.IUserService;
 import com.monkata.users.services.UserServiceConfig;
 
 import dto.Config;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @RestController
 public class UserController {
@@ -52,6 +53,16 @@ public class UserController {
 	 public List<Loans> getCustomerLoans(@PathVariable Long id){
 		 return loansFeignClient.getLoansDetails(id);
 	 }
+	 
+	 @GetMapping(path="getLoansByIdUserCB/{id}")
+	 @CircuitBreaker(name="detailsForCustomerSupportApp", fallbackMethod = "myCustomDetailsFallBack")
+	 public List<Loans> getCustomerLoansCB(@PathVariable Long id){
+		 return loansFeignClient.getLoansDetails(id);
+	 }
+	 
+	private List<Loans> myCustomDetailsFallBack (Long id, Throwable t){
+	 return loansFeignClient.getLoansDetails(id); 
+    }
 	
 
 }
