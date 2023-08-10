@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loans-deployment
+  labels:
+    app: loans
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: loans
+  template:
+   metadata:
+     labels:
+       app: loans
+   spec:
+     containers:
+     - name: loans
+       image: pledika/loans:latest
+       ports:
+        - containerPort: 8081
+       env:
+       - name: SPRING_PROFILES_ACTIVE
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: SPRING_PROFILES_ACTIVE
+             
+       - name: SPRING_CONFIG_IMPORT
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: SPRING_CONFIG_IMPORT       
+                  
+       - name: OTEL_TRACES_EXPORTER
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: OTEL_TRACES_EXPORTER
+             
+       - name: OTEL_EXPORTER_ZIPKIN_ENDPOINT
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: OTEL_EXPORTER_ZIPKIN_ENDPOINT
+             
+       - name: OTEL_PROPAGATORS
+         valueFrom: 
+            configMapKeyRef:
+              name: monkata-configmap
+              key: OTEL_PROPAGATORS 
+              
+       - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+         valueFrom: 
+            configMapKeyRef:
+              name: monkata-configmap
+              key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE                          
+---       
+apiVersion: v1
+kind: Service 
+metadata: 
+  name: loans-service
+spec:
+  selector:
+    app: loans
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081              

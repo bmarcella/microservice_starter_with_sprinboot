@@ -1,0 +1,16 @@
+package com.monkata.accounts.Service.Client;
+
+import java.time.LocalDate;
+
+import lombok.Data;
+
+@Data
+public class Loans {
+	
+	  private Long id;
+	  private Long customerId;
+	  private String type_loan;
+	  private double somme;
+	  private LocalDate date_created;
+
+}

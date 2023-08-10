@@ -1,0 +1,6 @@
+
+docker tag <identifiant-de-l-image-locale> <votre-nom-d-utilisateur-dockerhub>/<nom-de-l-image>:<étiquette>
+
+pledika/configserver
+ # docker tag pledika/configserver  pledika/configserver:latest
+ ocker push <votre-nom-d-utilisateur-dockerhub>/<nom-de-l-image>:<étiquette>

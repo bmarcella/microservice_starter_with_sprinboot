@@ -1,0 +1,35 @@
+Pour passer de l'utilisation d'Amazon Web Services (AWS) à Google Cloud Platform (GCP) ou vice versa, vous devrez ajuster vos configurations d'authentification et d'identité pour les différents services. Voici comment effectuer ces changements :
+
+Passer d'AWS à GCP :
+Déconnexion AWS CLI : Si vous êtes actuellement connecté à AWS CLI, vous pouvez vous déconnecter en exécutant :
+
+ # aws configure
+Vous pouvez effacer les valeurs actuelles pour aws_access_key_id, aws_secret_access_key, region, etc.
+
+Configurer GCP : Si vous ne l'avez pas déjà fait, configurez l'authentification GCP en exécutant :
+
+# gcloud auth login
+Suivez les instructions pour vous connecter à votre compte Google.
+
+Sélectionner un projet GCP : Si vous travaillez avec plusieurs projets GCP, vous pouvez choisir celui avec lequel vous souhaitez travailler en exécutant :
+
+# gcloud config set project <nom-du-projet>
+Remplacez <nom-du-projet> par le nom de votre projet GCP.
+
+Passer de GCP à AWS :
+Déconnexion GCP CLI : Si vous êtes actuellement connecté à GCP CLI, vous pouvez vous déconnecter en exécutant :
+
+# gcloud auth revoke 
+
+Configurer AWS CLI : Si vous ne l'avez pas déjà fait, configurez l'authentification AWS en exécutant :
+
+# aws configure
+Suivez les instructions pour fournir vos informations d'identification AWS (ID d'accès et clé secrète), la région par défaut, etc.
+
+Mettre à jour la configuration kubeconfig : Si vous utilisez kubectl pour gérer vos clusters Kubernetes, assurez-vous de mettre à jour la configuration kubeconfig pour pointer vers le cluster approprié. Par exemple, si vous travaillez avec un cluster Amazon EKS, exécutez :
+
+# aws eks update-kubeconfig --name <nom-du-cluster-eks>
+Remplacez <nom-du-cluster-eks> par le nom de votre cluster EKS.
+
+Il est important de noter que ces étapes ne couvrent que les aspects d'authentification et de configuration de la ligne de commande pour passer entre les services cloud.
+ Assurez-vous également de mettre à jour les configurations pour vos applications et services pour qu'ils pointent vers les ressources correctes dans le cloud que vous utilisez.

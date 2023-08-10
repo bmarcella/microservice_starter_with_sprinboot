@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: configserver-deployment
+  labels:
+    app: configserver
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: configserver
+  template:
+   metadata:
+     labels:
+       app: configserver
+   spec:
+     containers:
+     - name: configserver
+       image: pledika/configserver
+       ports:
+        - containerPort: 8071
+       env:
+       - name: SPRING_PROFILES_ACTIVE
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: SPRING_PROFILES_ACTIVE
+             
+       - name: OTEL_TRACES_EXPORTER
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: OTEL_TRACES_EXPORTER
+             
+       - name: OTEL_EXPORTER_ZIPKIN_ENDPOINT
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: OTEL_EXPORTER_ZIPKIN_ENDPOINT
+             
+       - name: OTEL_PROPAGATORS
+         valueFrom: 
+            configMapKeyRef:
+              name: monkata-configmap
+              key: OTEL_PROPAGATORS            
+            
+---       
+apiVersion: v1
+kind: Service 
+metadata: 
+  name: configserver-service
+spec:
+  selector:
+    app: configserver
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 9411 #outside port
+      targetPort: 9411   #inside port              

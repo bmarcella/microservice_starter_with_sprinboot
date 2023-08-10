@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;LoanServiceConfig.java&apos; to &apos;com.monkata.loans.services.LoanServiceConfig.java&apos;&#x0D;&#x0A;- Original project: &apos;Loans&apos;&#x0D;&#x0A;- Destination element: &apos;com.monkata.loans.services.LoanServiceConfig.java&apos;&#x0D;&#x0A;- Original element: &apos;com.monkata.loans.services.LoanServiceConfig.java&apos;" description="Copy compilation unit" destination="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.monkata.loans.services{LoanServiceConfig.java" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.monkata.loans.services{LoanServiceConfig.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1691295232478" units="1" version="1.0"/>
+</session>

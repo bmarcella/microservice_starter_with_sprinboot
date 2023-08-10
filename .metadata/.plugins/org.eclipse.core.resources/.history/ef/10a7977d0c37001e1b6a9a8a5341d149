@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eurekaserver-deployment
+  labels:
+    app: eurekaserver
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: eurekaserver
+  template:
+   metadata:
+     labels:
+       app: eurekaserver
+   spec:
+     containers:
+     - name: eurekaserver
+       image: pledika/eurekaserver
+       ports:
+        - containerPort: 8070
+       env:
+       - name: SPRING_PROFILES_ACTIVE
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: SPRING_PROFILES_ACTIVE
+             
+       - name: SPRING_CONFIG_IMPORT
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: SPRING_CONFIG_IMPORT       
+                  
+       - name: OTEL_TRACES_EXPORTER
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: OTEL_TRACES_EXPORTER
+             
+       - name: OTEL_EXPORTER_ZIPKIN_ENDPOINT
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: OTEL_EXPORTER_ZIPKIN_ENDPOINT
+             
+       - name: OTEL_PROPAGATORS
+         valueFrom: 
+            configMapKeyRef:
+              name: monkata-configmap
+              key: OTEL_PROPAGATORS                    
+---       
+apiVersion: v1
+kind: Service 
+metadata: 
+  name: eurekaserver-service
+spec:
+  selector:
+    app: eurekaserver
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8070 
+      targetPort: 8070              

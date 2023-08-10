@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accounts-deployment
+  labels:
+    app: accounts
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: accounts
+  template:
+   metadata:
+     labels:
+       app: accounts
+   spec:
+     containers:
+     - name: accounts
+       image: pledika/accounts
+       ports:
+        - containerPort: 8080
+       env:
+       - name: SPRING_PROFILES_ACTIVE
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: SPRING_PROFILES_ACTIVE
+             
+       - name: SPRING_CONFIG_IMPORT
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: SPRING_CONFIG_IMPORT       
+                  
+       - name: OTEL_TRACES_EXPORTER
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: OTEL_TRACES_EXPORTER
+             
+       - name: OTEL_EXPORTER_ZIPKIN_ENDPOINT
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: OTEL_EXPORTER_ZIPKIN_ENDPOINT
+             
+       - name: OTEL_PROPAGATORS
+         valueFrom: 
+            configMapKeyRef:
+              name: monkata-configmap
+              key: OTEL_PROPAGATORS 
+       - name: OTEL_PROPAGATORS
+         valueFrom: 
+            configMapKeyRef:
+              name: monkata-configmap
+              key: OTEL_PROPAGATORS                          
+---       
+apiVersion: v1
+kind: Service 
+metadata: 
+  name: accounts-service
+spec:
+  selector:
+    app: accounts
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080 #outside port
+      targetPort: 8080   #inside port              

@@ -1,0 +1,16 @@
+package com.monkata.gatewayserver.filters;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Component;
+
+@Component
+public class FilterUtility {
+    public static String CORRELATION_ID = "monkata-correlaton-id";
+	public String getCorrelationId(HttpHeaders requestHeaders) {
+		if(requestHeaders.get(CORRELATION_ID) != null) {
+			
+		}
+		return null;
+	}
+
+}

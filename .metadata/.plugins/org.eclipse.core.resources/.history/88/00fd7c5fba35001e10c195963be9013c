@@ -1,0 +1,140 @@
+ version: "3.8"
+ services: 
+     zipkin : 
+        image: openzipkin/zipkin
+        mem_limit: 700m
+        ports:
+          - "9411:9411"
+        networks:
+          - pledika-network
+     configserver: 
+        image: pledika/configserver
+        mem_limit: 700m
+        ports:
+          - "8071:8071"
+        networks:
+          - pledika-network
+        depends_on:
+          - zipkin
+        deploy:
+          restart_policy:
+            condition: on-failure
+            delay: 5s
+            max_attempts: 3
+            window: 120s
+        environment:
+           SPRING_PROFILES_ACTIVE: default
+           SPRING_CONFIG_IMPORT: configserver:http://configserver:8071
+           OTEL_EXPORTER_ZIPKIN_ENDPOINT: http://zipkin:9411/api/v2/spans
+          
+     eurekaserver: 
+        image: pledika/eurekaserver
+        mem_limit: 700m
+        ports:
+          - "8070:8070"
+        networks:
+          - pledika-network 
+        depends_on:
+          - configserver
+          - zipkin
+        deploy:
+          restart_policy:
+            condition: on-failure
+            delay: 5s
+            max_attempts: 3
+            window: 120s
+        environment:
+           SPRING_PROFILES_ACTIVE: default
+           SPRING_CONFIG_IMPORT: configserver:http://configserver:8071
+           OTEL_EXPORTER_ZIPKIN_ENDPOINT: http://zipkin:9411/api/v2/spans
+           
+     gatewayserver : 
+        image: pledika/gatewayserver
+        mem_limit: 700m
+        ports:
+          - "8072:8072"
+        networks:
+          - pledika-network
+        depends_on:
+          - configserver  
+          - eurekaserver
+          - loans
+          - accounts
+          - zipkin
+        deploy:
+          restart_policy:
+            condition: on-failure
+            delay: 5s
+            max_attempts: 6
+            window: 120s
+        environment:
+          SPRING_PROFILES_ACTIVE: default
+          SPRING_CONFIG_IMPORT: configserver:http://configserver:8071
+          EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/ 
+          OTEL_EXPORTER_ZIPKIN_ENDPOINT: http://zipkin:9411/api/v2/spans  
+          
+     zipkin : 
+        image: openzipkin/zipkin
+        mem_limit: 700m
+        ports:
+          - "9411:9411"
+        networks:
+          - pledika-network
+        deploy:
+          restart_policy:
+            condition: on-failure
+            delay: 5s
+            max_attempts: 3
+            window: 120s   
+           
+     accounts : 
+        image: pledika/accounts
+        mem_limit: 700m
+        ports:
+          - "8080:8080"
+        networks:
+          - pledika-network
+        depends_on:
+          - configserver  
+          - eurekaserver
+          - loans
+          - zipkin
+        deploy:
+          restart_policy:
+            condition: on-failure
+            delay: 5s
+            max_attempts: 3
+            window: 120s
+        environment:
+          SPRING_PROFILES_ACTIVE: default
+          SPRING_CONFIG_IMPORT: configserver:http://configserver:8071
+          EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+          OTEL_EXPORTER_ZIPKIN_ENDPOINT: http://zipkin:9411/api/v2/spans
+     loans : 
+        image: pledika/loans
+        mem_limit: 700m
+        ports:
+          - "8081:8081"
+        networks:
+          - pledika-network
+        depends_on:
+          - configserver  
+          - eurekaserver
+          - zipkin
+        deploy:
+          restart_policy:
+            condition: on-failure
+            delay: 5s
+            max_attempts: 3
+            window: 120s
+        environment:
+          SPRING_PROFILES_ACTIVE: default
+          SPRING_CONFIG_IMPORT: configserver:http://configserver:8071    
+          EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/ 
+          OTEL_EXPORTER_ZIPKIN_ENDPOINT: http://zipkin:9411/api/v2/spans       
+ networks: 
+   pledika-network :
+      driver: bridge  
+            
+            
+         

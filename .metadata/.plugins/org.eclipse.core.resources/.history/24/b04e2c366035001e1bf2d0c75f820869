@@ -1,0 +1,5 @@
+package com.monkata.gatewayserver.filters;
+
+public class ResponseTraceFilter {
+
+}

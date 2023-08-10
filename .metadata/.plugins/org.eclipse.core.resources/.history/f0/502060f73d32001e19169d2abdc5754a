@@ -1,0 +1,5 @@
+package com.monkata.accounts.Service;
+
+public class AccountServiceConfig {
+
+}

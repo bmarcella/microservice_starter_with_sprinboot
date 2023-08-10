@@ -1,0 +1,4 @@
+mvn spring-boot:build-image -Dspring-boot.build-image.imageName=pledika/loans:latest
+
+
+mvn spring-boot:build-image -Dspring-boot.build-image.imageName=pledika/accounts:latest

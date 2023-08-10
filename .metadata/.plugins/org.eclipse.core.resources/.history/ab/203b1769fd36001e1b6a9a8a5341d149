@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accounts-deployment2
+  labels:
+    app: accounts2
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: accounts2
+  template:
+   metadata:
+     labels:
+       app: accounts2
+   spec:
+     containers:
+     - name: accounts
+       image: pledika/accounts
+       ports:
+        - containerPort: 8080
+       env:
+       - name: SPRING_PROFILES_ACTIVE
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: SPRING_PROFILES_ACTIVE
+             
+       - name: SPRING_CONFIG_IMPORT
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: SPRING_CONFIG_IMPORT       
+                  
+       - name: OTEL_TRACES_EXPORTER
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: OTEL_TRACES_EXPORTER
+             
+       - name: OTEL_EXPORTER_ZIPKIN_ENDPOINT
+         valueFrom: 
+           configMapKeyRef:
+             name: monkata-configmap
+             key: OTEL_EXPORTER_ZIPKIN_ENDPOINT
+             
+       - name: OTEL_PROPAGATORS
+         valueFrom: 
+            configMapKeyRef:
+              name: monkata-configmap
+              key: OTEL_PROPAGATORS 
+              
+       - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+         valueFrom: 
+            configMapKeyRef:
+              name: monkata-configmap
+              key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE                          
+---       
+apiVersion: v1
+kind: Service 
+metadata: 
+  name: compte-service
+spec:
+  selector:
+    app: accounts2
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080              

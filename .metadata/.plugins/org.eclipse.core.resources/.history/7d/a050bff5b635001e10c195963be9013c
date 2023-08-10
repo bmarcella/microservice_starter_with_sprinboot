@@ -1,0 +1,48 @@
+mvnw clean install -Dmaven
+.test.skip=true
+mvnw spring-boot:build-image -Dmaven.test.skip=true --no-cache
+mvnw spring-boot:build-image -Dmaven.test.skip=true
+
+mvn dependency:purge-local-repository
+
+mvnw clean package
+
+
+docker system prune -a
+ 
+mvnw clean install  -U -Dmaven.test.skip=true
+mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=pledika/configserver:latest -Dmaven.test.skip=true
+docker build . -t pledika/accounts
+docker build . -t pledika/loans
+docker build . -t pledika/eurekaserver
+docker build . -t pledika/configserver
+docker build . -t pledika/gatewayserver
+
+docker run -p 8071:8071 --name configserver pledika/configserver  
+docker run -p 8070:8070 --name eurekaserver pledika/eurekaserver --build-arg ENV_VARIABLE_NAME=value
+docker run -p 8080:8080 --name accounts pledika/accounts
+docker run -p 8081:8081 --name loans  pledika/loans
+
+docker run -p 8070:8070  -e SPRING_PROFILES_ACTIVE=default -e VAR2=value --name eurekaserver pledika/eurekaserve 
+
+
+Spring cloud Config server
+
+Spring cloud Eureka server 
+
+Spring clound Gateway 
+   - cross cutting concern tracing 
+
+ // THOSE PACK IS FOR DEBUG 
+ 
+Spring cloud Sleuth : is for distributed tracing 
+    is replace by micrometer-tracing-bom
+
+[app_name , TRACE ID, SPAN ID ]
+
+ZIPKIN : is a Log server 
+
+Collector : collect all logs informations
+Storage : store log like BD Mysql/ elsticsearch
+Zipkin Query Service API : help us to find log 
+Web UI : webs UI 

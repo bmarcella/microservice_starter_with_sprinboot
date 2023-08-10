@@ -1,0 +1,14 @@
+package com.monkata.users.repository;
+
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.monkata.users.Entity.Loans;
+
+
+public interface UserRepository extends CrudRepository<Loans, Long>  {
+	
+	List<Loans> findByCustomerId(Long customerId);
+
+}

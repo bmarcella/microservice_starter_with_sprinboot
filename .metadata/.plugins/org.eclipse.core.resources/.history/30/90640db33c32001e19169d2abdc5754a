@@ -1,0 +1,11 @@
+spring.application.name = confiserver
+spring.profiles.active = git
+spring.cloud.config.server.native.search-locations=https://github.com/bmarcella/cloundConfig.git 
+spring.cloud.config.server.git.uri=https://github.com/bmarcella/cloundconfig.git
+spring.cloud.config.server.git.clone-on-start=true
+spring.cloud.config.server.git.default-label=main
+
+#spring.profiles.active=native
+#spring.cloud.config.server.native.search-locations=file:///C://config
+#spring.cloud.config.server.native.search-locations=classpath:/config 
+server.port=8071

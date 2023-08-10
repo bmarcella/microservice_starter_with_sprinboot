@@ -1,0 +1,8 @@
+kubeclt -> base cmd  represnt by K
+
+K get [PODS, DEPLOYMENTS, SERVICES, NODES,ALL,CONFIGMAP,REPLICASET] / show all services
+NB: REPLICASET IS instance of deployment thats mean number of replica of deployment . 
+K apply -f [file_name.yml] / run yml file
+# this cmd is to delete instances
+K delete [instance: [configmap, pod, service, etc ...]] [ instance_name ]
+

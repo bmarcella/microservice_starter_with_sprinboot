@@ -1,0 +1,21 @@
+
+
+#spring.datasource.url = jdbc:h2:testdb
+#spring.datasource.driverClassName = org.h2.Driver
+#spring.datasource.username=sa
+#spring.datasource.password=
+#spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.h2.console.enabled=true
+server.port=8080
+server.servlet.context-path=/api/v1
+#spring.data.rest.basePath=/api
+spring.application.name=accounts
+spring.profiles.active=prod
+spring.config.import=optional:configserver:http://localhost:8071
+#this is for the actuator to active all url
+management.endpoints.web.exposure.include=*    
+
+eureka.instance.prefer-ip-address= true
+eureka.client.register-with-eureka= true
+eureka.client.fetchRegistry = true
+eureka.client.service-url.defaultZone = http://localhost:8070/eureka

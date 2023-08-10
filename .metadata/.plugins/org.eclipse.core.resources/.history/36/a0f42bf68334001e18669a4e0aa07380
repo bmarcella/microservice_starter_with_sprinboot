@@ -1,0 +1,6 @@
+FROM adoptopenjdk:17-jdk-hotspot
+
+VOLUME /tmp
+COPY target/*.jar app.jar
+MAINTAINER monkata.com
+ENTRYPOINT ["java","-jar","/app.jar"]

@@ -1,0 +1,12 @@
+1691622787421	Rename package 'com.monkata.loans'
+1691622829121	Rename type 'LoansApplication'
+1691623532087	Rename type 'LoansController'
+1691623929601	Rename type 'LoanServiceConfig'
+1691623948665	Rename type 'LoanService'
+1691623982525	Rename type 'LoanRepository'
+1691624001803	Rename type 'Loans'
+1691624034318	Rename type 'ILoanService'
+1691625726572	Rename package 'com.monkata.accounts.Service.Client'
+1691626487740	Move compilation unit
+1691626510148	Move compilation unit
+1691626517147	Delete element

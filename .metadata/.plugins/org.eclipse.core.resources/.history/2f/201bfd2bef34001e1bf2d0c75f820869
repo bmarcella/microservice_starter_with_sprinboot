@@ -1,0 +1,16 @@
+
+spring.application.name=gatewayserver
+#this is for the actuator to active all url
+management.endpoints.web.exposure.include=*
+spring.config.import=optional:configserver:http://localhost:8071
+
+
+management.info.env.enabled=true
+info.app.name = Gateway Server MicroService
+info.app.description = Monkata Bank account App Gateway Server MicroService
+info.app.version = 1.0.0
+# 
+spring.cloud.gateway.discovery.locator.enabled=true
+
+logging.level.com.monkata.gatewayserver : DEBUG
+

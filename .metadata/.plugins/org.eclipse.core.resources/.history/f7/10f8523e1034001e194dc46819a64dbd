@@ -1,0 +1,5 @@
+package com.monkata.loans.services;
+
+public interface ILoanService {
+ public  List<Loans> getLoansByCustomerId (Long id);
+}

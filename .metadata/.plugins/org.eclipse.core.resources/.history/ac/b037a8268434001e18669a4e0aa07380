@@ -1,0 +1,16 @@
+mvnw clean install -Dmaven.test.skip=true
+mvnw spring-boot:build-image -Dmaven.test.skip=true --no-cache
+
+mvn dependency:purge-local-repository
+
+mvnw clean install  -U -Dmaven.test.skip=true
+mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=pledika/configserver:latest -Dmaven.test.skip=true
+docker build . -t pledika/accounts
+docker build . -t pledika/loans
+docker build . -t pledika/eurekaserver
+docker build . -t pledika/configserver
+
+docker run -p 8071:8071 --name configserver pledika/configserver  
+docker run -p 8070:8070 --name eurekaserver pledika/eurekaserver
+docker run -p 8080:8080 --name accounts pledika/accounts
+docker run -p 8081:8081 --name loans  pledika/loans

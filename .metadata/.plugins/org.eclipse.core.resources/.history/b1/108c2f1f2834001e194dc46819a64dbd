@@ -1,0 +1,65 @@
+ package com.monkata.accounts.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.monkata.accounts.Entity.Account;
+import com.monkata.accounts.Service.AccountServiceConfig;
+import com.monkata.accounts.Service.IAccountAction;
+import com.monkata.accounts.Service.Client.LoansFeignClient;
+
+import Helper.Response;
+import dto.Customer;
+
+@RestController
+@RequestMapping("account")
+public class AccountController {
+	
+	 @Autowired
+	 IAccountAction iAccountAction;
+	 
+	 @Autowired
+	 AccountServiceConfig config;
+	 
+	 
+	 @Autowired
+	 LoansFeignClient loansFeignClient;
+	 
+	 @GetMapping(path="/{id}")
+	 public Account getCustomerById(@PathVariable("id") Long id){
+		 return this.iAccountAction.getCustomerById(id);
+	 }
+	 
+	 @GetMapping(path="")
+	 public List<Account> getAll(){
+		 return this.iAccountAction.findAll();
+	 }
+	 
+	 @PostMapping(path="")
+	 public Response<Account> save(@RequestBody Customer customer) {
+		  Account a =  this.iAccountAction.save(customer);
+		  return new Response<Account>(false, a, "Succes", 200);
+	 }
+	 
+	 @GetMapping(path="/properties")
+	 public Config getProperties(){
+		 Config c = new Config();
+		 c.setConfig(config);
+		 return c;
+	 }
+	 
+	 @GetMapping(path="/customerLoans/{id}")
+	 public List<Loans> getCustomerLoans(@PathVariable Long id){
+		 return loansFeignClient.getLoansDetails(id);
+	 }
+	 
+	 
+
+}

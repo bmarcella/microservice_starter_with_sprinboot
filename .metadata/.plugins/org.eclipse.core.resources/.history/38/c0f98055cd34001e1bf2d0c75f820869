@@ -1,0 +1,40 @@
+
+
+#spring.datasource.url = jdbc:h2:testdb
+#spring.datasource.driverClassName = org.h2.Driver
+#spring.datasource.username=sa
+#spring.datasource.password=
+#spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.h2.console.enabled=true
+server.port=8080
+#server.servlet.context-path=/api/v1
+#spring.data.rest.basePath=/api
+spring.application.name=accounts
+spring.profiles.active=prod
+spring.config.import=optional:configserver:http://localhost:8071
+#this is for the actuator to active all url
+management.endpoints.web.exposure.include=*    
+
+# this config is for eureka server 
+eureka.instance.preferIpAdress= true
+eureka.client.registerWithEureka= true
+eureka.client.fetchRegistry = true
+eureka.client.service-url.defaultZone=http://localhost:8070/eureka
+
+## config info endpoint
+management.info.env.enabled=true
+info.app.name = Accounts Microservice
+info.app.description = Monkata Bank account App
+info.app.version = 1.0.0
+
+endpoint.shutdown.enabled = true
+management.endpoint.shutdown.enabled= true
+
+## resilience config 
+resilience4j.circuitbreaker.configs.default.register-health-indicator= true
+resilience4j.circuitbreaker.instances.detailsForCustomerSupportApp.minimum-number-of-calls=5
+resilience4j.circuitbreaker.instances.detailsForCustomerSupportApp.failure-rate-threshold=50
+resilience4j.circuitbreaker.instances.detailsForCustomerSupportApp.wait-duration-in-open-state=30000
+resilience4j.circuitbreaker.instances.detailsForCustomerSupportApp.permitted-number-of-calls-in-half-open-state=2
+#END FO SESILIENCE CONFIG
+

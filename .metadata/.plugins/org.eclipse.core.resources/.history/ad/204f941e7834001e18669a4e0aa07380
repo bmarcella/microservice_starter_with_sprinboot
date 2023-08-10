@@ -1,0 +1,7 @@
+#FROM openjdk:17-slim as build
+
+FROM eclipse-temurin:17-jdk-alpine
+VOLUME /tmp
+COPY target/*.jar app.jar
+MAINTAINER monkata.com
+ENTRYPOINT ["java","-jar","/app.jar"]

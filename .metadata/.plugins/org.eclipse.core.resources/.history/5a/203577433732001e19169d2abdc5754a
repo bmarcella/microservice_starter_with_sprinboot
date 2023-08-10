@@ -1,0 +1,12 @@
+accounts.msg = welcome to the accounts default application
+accounts.build-version = 3
+
+
+accounts.maildetails.hostName = dev-localhost
+accounts.maildetails.port = 9001
+accounts.maildetails.from = bmarcella91@gmail.com
+accounts.maildetails.subject = Test
+
+accounts.activeBranches[0]=Mumbai
+accounts.activeBranches[1]=London
+accounts.activeBranches[0]=Washington

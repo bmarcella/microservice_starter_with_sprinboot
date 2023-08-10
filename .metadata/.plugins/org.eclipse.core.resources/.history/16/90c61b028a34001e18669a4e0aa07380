@@ -1,0 +1,5 @@
+FROM openjdk:17
+COPY target/*.jar app.jar
+EXPOSE 8070
+MAINTAINER monkata.com
+ENTRYPOINT ["java","-jar","/app.jar"]

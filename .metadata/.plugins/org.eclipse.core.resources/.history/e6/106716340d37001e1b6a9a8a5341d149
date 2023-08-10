@@ -1,0 +1,13 @@
+package com.monkata.users.services;
+
+import java.util.List;
+
+import com.monkata.users.Entity.Users;
+
+public interface ILoanService {
+ public  List<Users> getLoansByCustomerId (Long id);
+
+ public Users save(Users l);
+
+ public List<Users> findAll();
+}

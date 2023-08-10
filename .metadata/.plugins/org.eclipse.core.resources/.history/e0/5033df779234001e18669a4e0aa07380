@@ -1,0 +1,28 @@
+ version: "3.8"
+ services: 
+     configserver: 
+        image: pledika/configserver
+        mem_limit: 700m
+        ports:
+          - "8071:8071"
+        networks:
+          - pledika-network
+          
+     eurekaserver: 
+        image: pledika/eurekaserver
+        mem_limit: 700m
+        ports:
+          - "8070:8070"
+        networks:
+          - pledika-network 
+        depends_on:
+          - configserver 
+        environment:
+           SPRING_PROFILES_ACTIVE: default
+           SPRING_CONFIG_IMPORT: configserver:http://configserver:8071  
+ networks: 
+   pledika-network :
+      driver: bridge  
+            
+            
+         

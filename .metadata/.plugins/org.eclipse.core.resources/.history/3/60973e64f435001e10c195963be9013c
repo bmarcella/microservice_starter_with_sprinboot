@@ -1,0 +1,33 @@
+package Helper;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import io.opentelemetry.api.trace.Tracer;
+;
+
+@Configuration
+public class OpenTeleMetryConfig {
+	
+	 @Value("${spring.zipkin.url}")
+	 private String zipkinUrl;
+
+	    @Bean
+	    public Tracer tracer() {
+	        ZipkinSpanExporter exporter = ZipkinSpanExporter.builder()
+	                .setEndpoint(zipkinUrl)
+	                .build();
+
+	        BatchSpanProcessor spanProcessor = BatchSpanProcessor.builder(exporter).build();
+
+	        return OpenTelemetrySdk.builder()
+	                .setTracerProvider(
+	                        SdkTracerProvider.builder()
+	                                .addSpanProcessor(spanProcessor)
+	                                .build()
+	                )
+	                .buildAndRegisterGlobal();
+	    }
+
+}

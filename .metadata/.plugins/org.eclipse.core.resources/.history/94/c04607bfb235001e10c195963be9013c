@@ -1,0 +1,85 @@
+
+
+#spring.datasource.url = jdbc:h2:testdb
+#spring.datasource.driverClassName = org.h2.Driver
+#spring.datasource.username=sa
+#spring.datasource.password=
+#spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.h2.console.enabled=true
+server.port=8080
+#server.servlet.context-path=/api/v1
+#spring.data.rest.basePath=/api
+spring.application.name=accounts
+spring.profiles.active=prod
+spring.config.import=optional:configserver:http://localhost:8071
+#this is for the actuator to active all url
+management.endpoints.web.exposure.include=*    
+
+# this config is for eureka server 
+eureka.instance.preferIpAdress= true
+eureka.client.registerWithEureka= true
+eureka.client.fetchRegistry = true
+eureka.client.service-url.defaultZone=http://localhost:8070/eureka
+
+## config info endpoint
+management.info.env.enabled=true
+info.app.name = Accounts Microservice
+info.app.description = Monkata Bank account App
+info.app.version = 1.0.0
+
+endpoint.shutdown.enabled = true
+management.endpoint.shutdown.enabled= true
+
+## resilience config for circuit breaker
+## CLOSE THE ENDPOINT ON FAILLURE
+## IT ISOLATE THE REQUEST TO A THREAD
+resilience4j.circuitbreaker.configs.default.register-health-indicator=true
+#  resilience4j.circuitbreaker.instances. NAME OF THE CIRCUIT BREAKER . EVENT  
+# THERE ARE 4 EVENT 
+# 1) minimum-number-of-calls (monitor number of request to stay open)
+# 2) failure-rate-threshold (percent to consider a circuit to open in %)
+# 3) wait-duration-in-open-state (how much time has to wait before open)
+# 4) permitted-number-of-calls-in-half-open-state ( when it is in halt open how many request he has to allow)
+resilience4j.circuitbreaker.instances.detailsForCustomerSupportApp.minimum-number-of-calls=5
+resilience4j.circuitbreaker.instances.detailsForCustomerSupportApp.failure-rate-threshold=50
+resilience4j.circuitbreaker.instances.detailsForCustomerSupportApp.wait-duration-in-open-state=30000
+resilience4j.circuitbreaker.instances.detailsForCustomerSupportApp.permitted-number-of-calls-in-half-open-state=2
+#END FO SESILIENCE CONFIG
+
+
+## resilience config Retry
+# RETRY REUQEST ON FAILURE
+#resilience4j.retry.configs.default.register-health-indicator = true
+#  resilience4j.retry.instances. NAME OF THE RETRY . EVENT  
+# THERE ARE 3 EVENTs
+# 1) max-attempts (how many time it suposed to retry)
+# 2) wait-duration (time to wait before aech try)
+resilience4j.retry.instances.detailsForCustomerSupportAppRetry.max-attempts=3
+resilience4j.retry.instances.detailsForCustomerSupportAppRetry.wait-duration=2000
+#END FO SESILIENCE CONFIG
+
+
+
+## resilience config RateLimiter
+#LIMIT NUMBER OF REQUEST PER PERIOD 
+resilience4j.ratelimiter.configs.default.register-health-indicator = true
+#  resilience4j.ratelimiter.instances. NAME OF THE RATE LIMITER . EVENT  
+# THERE ARE 3 EVENTs
+# 1) timeout-duration (how much time it suposed to wait for permision)
+# 2) limit-refresh-period (time to wait before each try)
+# 2) limit-for-period (number request by period )
+resilience4j.ratelimiter.instances.detailsForCustomerSupportAppRateLimiter.timeout-duration=5000
+resilience4j.ratelimiter.instances.detailsForCustomerSupportAppRateLimiter.limit-refresh-period=5000
+resilience4j.ratelimiter.instances.detailsForCustomerSupportAppRateLimiter.limit-for-period=1
+#END FO RESILIENCE CONFIG 
+
+
+## resilience config BULK HEAD
+#resilience4j.bulkhead.configs.default.register-health-indicator = true
+#  resilience4j.bulkhead.instances. NAME OF THE BULKHEAD . EVENT  
+# THERE ARE 3 EVENTs
+# 1) max-concurrent-calls (how much call it suposes to handle)
+# 2) max-wait-duration (time to wait before each try)
+resilience4j.bulkhead.instances.detailsForCustomerSupportAppRateLimiter.max-concurrent-calls=10
+resilience4j.bulkhead.instances.detailsForCustomerSupportAppRateLimiter.max-wait-duration=3000
+#END FO RESILIENCE CONFIG 

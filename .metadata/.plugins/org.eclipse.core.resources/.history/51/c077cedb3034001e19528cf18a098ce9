@@ -1,0 +1,7 @@
+mvn clean install -Dmaven.test.skip=true
+mvn spring-boot:build-image -Dmaven.test.skip=true
+
+docker build . -t pledika/accounts
+docker build . -t pledika/loans
+docker build . -t pledika/eurekaserver
+docker build . -t pledika/configserver
