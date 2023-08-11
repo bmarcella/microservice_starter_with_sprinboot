@@ -58,7 +58,7 @@
           - configserver  
           - eurekaserver
           - loans
-          - accounts
+          - users
         deploy:
           restart_policy:
             condition: on-failure
@@ -73,31 +73,6 @@
           OTEL_EXPORTER_ZIPKIN_ENDPOINT: http://zipkin:9411/api/v2/spans
           OTEL_PROPAGATORS: b3  
 
-     accounts: 
-        image: pledika/accounts
-        mem_limit: 700m
-        ports:
-          - "8084:8084"
-        networks:
-          - pledika-network
-        depends_on:
-          - zipkin
-          - configserver  
-          - eurekaserver
-          - loans
-        deploy:
-          restart_policy:
-            condition: on-failure
-            delay: 5s
-            max_attempts: 3
-            window: 120s
-        environment:
-          SPRING_PROFILES_ACTIVE: default
-          SPRING_CONFIG_IMPORT: configserver:http://configserver:8071
-          EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
-          OTEL_TRACES_EXPORTER: zipkin
-          OTEL_EXPORTER_ZIPKIN_ENDPOINT: http://zipkin:9411/api/v2/spans
-          OTEL_PROPAGATORS: b3
      loans: 
         image: pledika/loans
         mem_limit: 700m
@@ -109,7 +84,6 @@
           - zipkin
           - configserver  
           - eurekaserver
-
         deploy:
           restart_policy:
             condition: on-failure
@@ -134,6 +108,7 @@
           - zipkin
           - configserver  
           - eurekaserver
+          - loans
         deploy:
           restart_policy:
             condition: on-failure

@@ -4,3 +4,5 @@
 1691623236804	Rename resource 'Docker'
 1691623361766	Delete 9 resources
 1691623490611	Rename resource 'User'
+1691639433136	Delete resource 'Accounts'
+1691639556811	Delete resource 'CI_CD/K8s/5_accounts.yml'

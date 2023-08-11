@@ -1,0 +1,20 @@
+deploymentName: configserver-deployment
+deploymentLabel: configserver
+
+
+replicaCount : 1
+
+image:
+   repository: pledika/configserver
+   tag: latest
+containerPort: 8082
+
+service:
+  type: LoadBalancer
+  port: 8082
+  targetPort: 8082
+
+config_enabled: false 
+zipkin_enabled: true 
+profile_enabled: true 
+eureka_enabled: true 

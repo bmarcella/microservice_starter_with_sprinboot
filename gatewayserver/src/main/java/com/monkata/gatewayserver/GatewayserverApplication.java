@@ -17,22 +17,24 @@ public class GatewayserverApplication {
 		SpringApplication.run(GatewayserverApplication.class, args);
 	}
 	// this bean is to rewrite routes
-//	@Bean
-//	public RouteLocator myRoutes(RouteLocatorBuilder builder) {
-//		
-//		return builder.routes()
-//			  .route(p -> p
-//			  .path("/monkata/accounts/**")
-//			  .filters(f -> f.rewritePath("/monkata/accounts/(?<segment>.*)","/${segment}")
-//			                   .addRequestHeader("X-Response-Time", new Date().toString()))
-//			  .uri("lb://ACCOUNTS"))
-//			  
-//			  .route(p -> p
-//					  .path("/monkata/loans/**")
-//					  .filters(f -> f.rewritePath("/monkata/loans/(?<segment>.*)","/${segment}")
-//					                   .addRequestHeader("X-Response-Time", new Date().toString()))
-//					  .uri("lb://LOANS")).build();
-//			  
-//	}
+	@Bean
+	public RouteLocator myRoutes(RouteLocatorBuilder builder) {
+		
+		return builder.routes()
+			  // route for users	
+			  .route(p -> p
+			  .path("/api/v1/users/**")
+			  .filters(f -> f.rewritePath("/api/v1/users/(?<segment>.*)","/${segment}")
+			                   .addRequestHeader("X-Response-Time", new Date().toString()))
+			  .uri("lb://users"))
+			  
+			  // route for loans	
+			  .route(p -> p
+					  .path("/api/v1/loans/**")
+					  .filters(f -> f.rewritePath("/api/v1/loans/(?<segment>.*)","/${segment}")
+					                   .addRequestHeader("X-Response-Time", new Date().toString()))
+					  .uri("lb://LOANS")).build();
+		
+	}
 
 }

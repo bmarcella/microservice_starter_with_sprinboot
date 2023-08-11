@@ -64,5 +64,28 @@ public class UserController {
 	 return loansFeignClient.getLoansDetails(id); 
     }
 	
+	
+//	 
+//	 @GetMapping(path="customerLoansRetry/{id}")
+//	 @Retry(name="detailsForCustomerSupportAppRetry", fallbackMethod = "myCustomDetailsFallBack")
+//	 public List<Loans> getCustomerLoansRetry(@PathVariable Long id){
+//		 return loansFeignClient.getLoansDetails(id);
+//	 }
+//	 
+//	 private List<Loans> myCustomDetailsFallBack (Long id, Throwable t){
+//		 return loansFeignClient.getLoansDetails(id); 
+//	 }
+//	 
+//	 @GetMapping(path="customerLoansRateLimiter/{id}")
+//	 @RateLimiter(name="detailsForCustomerSupportAppRateLimiter", fallbackMethod = "myCustomDetailsFallBack")
+//	 public List<Loans> getCustomerLoansRateLimiter(@PathVariable Long id){
+//		 return loansFeignClient.getLoansDetails(id);
+//	 }
+//	 
+//	 @GetMapping(path="customerLoansBulkhead/{id}")
+//	 @Bulkhead(name="detailsForCustomerSupportAppBh", fallbackMethod = "myCustomDetailsFallBack")
+//	 public List<Loans> customerLoansBulkhead(@PathVariable Long id){
+//		 return loansFeignClient.getLoansDetails(id);
+//	 }
 
 }
