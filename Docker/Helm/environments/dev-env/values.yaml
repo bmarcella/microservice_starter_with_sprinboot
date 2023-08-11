@@ -1,0 +1,8 @@
+global:
+  configMapName: monkata-dev-configmap
+  activeProfile: dev
+  exporterTrace: zipkin
+  zipkinBaseURL:  http://zipkin-service:9411/api/v2/spans
+  propagator: b3       
+  configServerURL: configserver:http://configserver:8071
+  eurekaServerURL: http://eurekaserver-service:8070/eureka/ 

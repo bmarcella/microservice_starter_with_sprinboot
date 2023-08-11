@@ -1,18 +1,18 @@
-deploymentName: users-deployment
-deploymentLabel: users
+deploymentName: eurekaserver-deployment
+deploymentLabel: eurekaserver
 
 
 replicaCount : 1
 
 image:
-   repository: pledika/users
+   repository: pledika/eurekaserver
    tag: latest
-containerPort: 8082
+containerPort: 8070
 
 service:
   type: LoadBalancer
-  port: 8082
-  targetPort: 8080
+  port: 8070
+  targetPort: 8070
 
 config_enabled: true 
 zipkin_enabled: true 

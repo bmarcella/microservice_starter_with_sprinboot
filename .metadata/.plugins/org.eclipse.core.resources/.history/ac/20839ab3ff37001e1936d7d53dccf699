@@ -1,0 +1,8 @@
+global:
+  configMapName: monkata-configmap
+  activeProfile: dev
+  exporterTrace: 
+  zipkinBaseURL: http://zipkin:9411/
+  propagator:    
+  configServerURL: configserver:http://configserver
+  eurekaServerURL:

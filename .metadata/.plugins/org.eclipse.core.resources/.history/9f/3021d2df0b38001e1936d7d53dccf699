@@ -1,0 +1,6 @@
+dependencies:
+- name: monkata-common
+  repository: file://../../monkata-common
+  version: 0.1.0
+digest: sha256:63d6d1a9611f92302ea2bc0c3b0cbfec01850c49e24a49a2a3bd2bfbbca14c9c
+generated: "2023-08-10T23:44:13.1818485-04:00"

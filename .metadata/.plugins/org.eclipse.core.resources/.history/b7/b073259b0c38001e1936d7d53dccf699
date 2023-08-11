@@ -1,0 +1,24 @@
+dependencies:
+- name: monkata-common
+  repository: file://../../monkata-common
+  version: 0.1.0
+- name: configserver
+  repository: file://../../monkata-services/configserver
+  version: 0.1.0
+- name: eurekaserver
+  repository: file://../../monkata-services/eurekaserver
+  version: 0.1.0
+- name: zipkin
+  repository: file://../../monkata-services/zipkin
+  version: 0.1.0
+- name: loans
+  repository: file://../../monkata-services/loans
+  version: 0.1.0
+- name: users
+  repository: file://../../monkata-services/users
+  version: 0.1.0
+- name: gatewayserver
+  repository: file://../../monkata-services/gatewayserver
+  version: 0.1.0
+digest: sha256:e5a711ca5df448395cd125abc956cd68b6387950a0b25d0eafd663c9728c57ae
+generated: "2023-08-11T02:01:01.2455275-04:00"

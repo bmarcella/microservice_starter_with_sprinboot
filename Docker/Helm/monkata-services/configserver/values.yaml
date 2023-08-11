@@ -7,14 +7,14 @@ replicaCount : 1
 image:
    repository: pledika/configserver
    tag: latest
-containerPort: 8082
+containerPort: 8071
 
 service:
   type: LoadBalancer
-  port: 8082
-  targetPort: 8082
+  port: 8071
+  targetPort: 8071
 
 config_enabled: false 
 zipkin_enabled: true 
 profile_enabled: true 
-eureka_enabled: true 
+eureka_enabled: false 
